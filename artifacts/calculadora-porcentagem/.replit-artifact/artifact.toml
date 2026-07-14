@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Calculadora de Porcentagens"
+version = "1.0.0"
+id = "artifacts/calculadora-porcentagem"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21084
+
+[services.development]
+run = "pnpm --filter @workspace/calculadora-porcentagem run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/calculadora-porcentagem", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/calculadora-porcentagem/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21084"
+BASE_PATH = "/"
