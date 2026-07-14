@@ -1,4 +1,4 @@
-name: Build e Deploy para Hostinger
+name: Build e Deploy
 
 on:
   push:
@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Baixar o código
@@ -30,12 +32,10 @@ jobs:
       - name: Gerar o build do site
         run: PORT=3000 BASE_PATH="/" pnpm --filter @workspace/calculadora-porcentagem run build
 
-      - name: Enviar para o Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Publicar arquivos na branch "dist"
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./artifacts/calculadora-porcentagem/dist/public/
-          server-dir: /public_html/
-          dangerous-clean-slate: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: dist
+          publish_dir: ./artifacts/calculadora-porcentagem/dist/public
+          force_orphan: true
