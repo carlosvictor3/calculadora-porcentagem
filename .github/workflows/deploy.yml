@@ -34,7 +34,7 @@ jobs:
 
       - name: Adicionar package.json para compatibilidade com Hostinger
         run: |
-          echo '{"name":"calculadora-porcentagem","version":"1.0.0","description":"Calculadora de Porcentagens"}' \
+          echo '{"name":"calculadora-porcentagem","version":"1.0.0","description":"Calculadora de Porcentagens","scripts":{"build":"echo already built","start":"echo static site"}}' \
             > ./artifacts/calculadora-porcentagem/dist/public/package.json
 
       - name: Publicar arquivos na branch "dist"
