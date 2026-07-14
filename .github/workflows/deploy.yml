@@ -32,6 +32,11 @@ jobs:
       - name: Gerar o build do site
         run: PORT=3000 BASE_PATH="/" pnpm --filter @workspace/calculadora-porcentagem run build
 
+      - name: Adicionar package.json para compatibilidade com Hostinger
+        run: |
+          echo '{"name":"calculadora-porcentagem","version":"1.0.0","description":"Calculadora de Porcentagens"}' \
+            > ./artifacts/calculadora-porcentagem/dist/public/package.json
+
       - name: Publicar arquivos na branch "dist"
         uses: peaceiris/actions-gh-pages@v4
         with:
