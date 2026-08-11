@@ -1,0 +1,10 @@
+Options -MultiViews
+RewriteEngine On
+
+# Serve arquivos e pastas existentes diretamente (inclui ads.txt, robots.txt etc.)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redireciona tudo mais para o index.html (React Router SPA)
+RewriteRule ^ index.html [L]
